@@ -1,4 +1,4 @@
-name: Build Kivy APK (Buildozer)
+name: Build Kivy APK
 
 on:
   workflow_dispatch:
@@ -14,25 +14,28 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: "3.10"
 
       - name: Install system dependencies and Buildozer
         run: |
           sudo apt-get update
           sudo apt-get install -y \
             python3-pip python3-setuptools python3-wheel \
-            git zip openjdk-17-jdk \
+            build-essential git zip openjdk-17-jdk \
             libffi-dev libssl-dev \
-            liblzma-dev zlib1g-dev \
-            build-essential
+            libltdl-dev libjpeg-dev libblas-dev liblapack-dev \
+            libtiff5-dev zlib1g-dev \
+            autoconf automake libtool pkg-config \
+            libncurses5 libncurses5-dev
           pip3 install --upgrade pip
-          pip3 install buildozer cython
+          pip3 install cython
+          pip3 install buildozer
 
-      - name: Build debug APK
+      - name: Build APK
         run: |
           buildozer android debug
 
-      - name: Upload APK artifact
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: sms-reader-apk
