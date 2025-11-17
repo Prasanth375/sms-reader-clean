@@ -26,10 +26,11 @@ jobs:
             libltdl-dev libjpeg-dev libblas-dev liblapack-dev \
             libtiff5-dev zlib1g-dev \
             autoconf automake libtool pkg-config \
-            libncurses5 libncurses5-dev
+            libstdc++6 libglu1-mesa
           pip3 install --upgrade pip
           pip3 install cython
           pip3 install buildozer
+          pip3 install python-for-android
 
       - name: Build APK
         run: |
