@@ -11,15 +11,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Build APK with Buildozer (Docker image)
+      - name: Build APK using Buildozer Docker Image
         run: |
           docker run --rm \
-            -v "$PWD":/home/user/app \
+            -v ${{ github.workspace }}:/home/user/app \
             -w /home/user/app \
             kivy/buildozer \
-            buildozer android debug
+            bash -lc "yes | buildozer android debug"
 
-      - name: Upload APK artifact
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: sms-reader-apk
