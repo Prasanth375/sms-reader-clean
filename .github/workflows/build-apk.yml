@@ -23,7 +23,6 @@ jobs:
             python3-pip python3-setuptools python3-wheel \
             git zip openjdk-17-jdk \
             libffi-dev libssl-dev \
-            libncurses5 libtinfo5 \
             liblzma-dev zlib1g-dev \
             build-essential
           pip3 install --upgrade pip
