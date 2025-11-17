@@ -7,6 +7,9 @@ jobs:
   build-android:
     name: Build for Android
     runs-on: ubuntu-latest
+    env:
+      USER: root
+      BUILDOZER_ALLOW_ROOT: "1"
 
     steps:
       - name: Checkout repository
@@ -16,7 +19,6 @@ jobs:
         uses: ArtemSBulgakov/buildozer-action@v1
         id: buildozer
         with:
-          # buildozer.spec is in the repo root
           workdir: .
           buildozer_version: stable
 
