@@ -4,24 +4,24 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-android:
+    name: Build for Android
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Build APK using Buildozer Docker Image
-        run: |
-          docker run --rm \
-            -u 1000:1000 \
-            -v ${{ github.workspace }}:/home/user/app \
-            -w /home/user/app \
-            kivy/buildozer \
-            buildozer android debug
+      - name: Build with Buildozer
+        uses: ArtemSBulgakov/buildozer-action@v1
+        id: buildozer
+        with:
+          # buildozer.spec is in the repo root
+          workdir: .
+          buildozer_version: stable
 
-      - name: Upload APK
+      - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: sms-reader-apk
-          path: bin/*.apk
+          path: ${{ steps.buildozer.outputs.filename }}
