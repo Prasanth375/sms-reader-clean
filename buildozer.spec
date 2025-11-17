@@ -2,6 +2,8 @@
 title = SMS Reader
 package.name = smsreader
 package.domain = org.example
+version = 0.1.0
+
 source.dir = .
 source.include_exts = py,kv,png,jpg,ttf,ogg
 fullscreen = 1
