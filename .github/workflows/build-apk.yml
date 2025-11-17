@@ -11,22 +11,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install system dependencies
+      - name: Build APK with Buildozer (Docker image)
         run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            python3-pip python3-setuptools python3-wheel \
-            build-essential git zip openjdk-17-jdk \
-            libffi-dev libssl-dev libltdl-dev
-
-      - name: Install buildozer & cython
-        run: |
-          python3 -m pip install --upgrade pip
-          python3 -m pip install buildozer cython
-
-      - name: Build APK with buildozer
-        run: |
-          yes | buildozer android debug
+          docker run --rm \
+            -v "$PWD":/home/user/app \
+            -w /home/user/app \
+            kivy/buildozer \
+            buildozer android debug
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
