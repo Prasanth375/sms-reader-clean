@@ -11,15 +11,32 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Build APK with Buildozer Docker
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install system dependencies
         run: |
-          docker run --rm \
-            -u "$(id -u):$(id -g)" \
-            -e BUILDOZER_ALLOW_ROOT=1 \
-            -v "$PWD":/home/user/app \
-            -w /home/user/app \
-            kivy/buildozer \
-            buildozer android debug
+          sudo apt-get update
+          sudo apt-get install -y \
+            python3-pip python3-setuptools python3-wheel \
+            build-essential git zip openjdk-17-jdk \
+            libffi-dev libssl-dev \
+            libltdl-dev libjpeg-dev libblas-dev liblapack-dev \
+            libtiff5-dev zlib1g-dev \
+            autoconf automake libtool pkg-config \
+            libstdc++6 libglu1-mesa
+
+      - name: Install Python packages
+        run: |
+          pip3 install --upgrade pip
+          pip3 install cython
+          pip3 install buildozer
+
+      - name: Build APK
+        run: |
+          buildozer android debug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
