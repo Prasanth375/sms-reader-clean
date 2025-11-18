@@ -14,29 +14,64 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.10"
+          python-version: '3.10'
 
       - name: Install system dependencies
+        env:
+          DEBIAN_FRONTEND: noninteractive
         run: |
           sudo apt-get update
           sudo apt-get install -y \
-            python3-pip python3-setuptools python3-wheel \
-            build-essential git zip openjdk-17-jdk \
-            libffi-dev libssl-dev \
-            libltdl-dev libjpeg-dev libblas-dev liblapack-dev \
-            libtiff5-dev zlib1g-dev \
-            autoconf automake libtool pkg-config \
-            libstdc++6 libglu1-mesa
+            build-essential \
+            git \
+            zip \
+            unzip \
+            openjdk-17-jdk \
+            libffi-dev \
+            libssl-dev \
+            liblzma-dev \
+            zlib1g-dev \
+            libncurses5-dev \
+            libjpeg-dev \
+            libfreetype6-dev \
+            libsndfile1 \
+            libgl1-mesa-dev \
+            libgles2-mesa-dev \
+            libsdl2-dev \
+            libsdl2-image-dev \
+            libsdl2-mixer-dev \
+            libsdl2-ttf-dev \
+            libportmidi-dev \
+            libswscale-dev \
+            libavformat-dev \
+            libavcodec-dev \
+            libgstreamer1.0-dev \
+            libgstreamer-plugins-base1.0-dev \
+            libmtdev-dev \
+            libudev-dev \
+            libasound2-dev \
+            libpulse-dev \
+            libx11-dev \
+            libx11-xcb-dev \
+            libxcb1-dev \
+            libxrandr-dev \
+            libxss-dev \
+            libxcursor-dev \
+            libxi-dev \
+            libxinerama-dev \
+            libegl1-mesa-dev \
+            libwayland-dev \
+            libibus-1.0-dev \
+            libpango1.0-dev
 
-      - name: Install Python packages
+      - name: Upgrade pip and install buildozer
         run: |
-          pip3 install --upgrade pip
-          pip3 install cython
-          pip3 install buildozer
+          python -m pip install --upgrade pip
+          pip install "cython<3" buildozer
 
       - name: Build APK
         run: |
-          yes | buildozer android debug
+          buildozer -v android debug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
