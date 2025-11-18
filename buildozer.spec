@@ -1,39 +1,37 @@
 [app]
-# Basic app info
 title = SMS Reader
 package.name = smsreader
 package.domain = org.example
-version = 0.1
-
-# Where your main.py is
 source.dir = .
 source.include_exts = py,kv,png,jpg,ttf,ogg
+fullscreen = 0
+log_level = 2
 
-# Python / Kivy requirements
-# (pyjnius = Android APIs, plyer = TTS etc.)
+# Your main .py file
+entrypoint = main.py
+
+# (str) Supported orientations
+orientation = portrait
+
+# (list) Application requirements
 requirements = python3,kivy,pyjnius,plyer
 
-# App display settings
-orientation = portrait
-fullscreen = 1
-log_level = 2
+# (str) Application versioning (method 1)
+version = 0.1
 
-# Android permissions (for SMS reader)
-android.permissions = READ_SMS,RECEIVE_SMS,INTERNET
+# (str) Presplash of the application
+presplash.filename =
 
-# Android SDK / build settings
-android.api = 35
-android.minapi = 21
-android.archs = armeabi-v7a, arm64-v8a
-
-# Prefer a stable build-tools version
-android.build_tools_version = 35.0.1
-
-# IMPORTANT: auto-accept SDK license (no y/N prompt)
-android.accept_sdk_license = True
-
+# (str) Icon of the application
+icon.filename =
 
 [buildozer]
-# Buildozer settings
 log_level = 2
-warn_on_root = 0
+warn_on_root = 1
+
+[app.android]
+android.api = 36
+android.minapi = 23
+android.sdk_path =
+android.archs = arm64-v8a,armeabi-v7a
+android.permissions = READ_SMS,RECEIVE_SMS,INTERNET
